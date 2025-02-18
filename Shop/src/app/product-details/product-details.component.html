@@ -1,8 +1,36 @@
 <h2>Product Details</h2>
 
 <div *ngIf="product">
-  <h3>{{ product.name }}</h3>
-  <h4>{{ product.price | currency }}</h4>
-  <p>{{ product.description }}</p>
-  <button type="button" (click)="addToCart(product)">Buy</button>
+    <h3>{{ product.name }}</h3>
+    <h4>{{ product.price | currency }}</h4>
+    <p>{{ product.description }}</p>
+  <p *ngIf="product.stock">
+    Stock: {{ product.stock}}
+  </p>
+
+
+  <p id="lowStockMssg" *ngIf="product.stock < 4 && product.stock > 0">
+    ¡Quedan pocas unidades!
+  </p>
+
+  <div *ngIf="product.caracteristicas">
+    <div *ngIf="product.caracteristicas.length > 0">
+      <h4>Características</h4>
+      <p *ngFor="let caracteristica of product.caracteristicas">
+        {{caracteristica}}
+      </p>
+    </div>
+  </div>
+
+  <div *ngIf="product.garantia">
+    <p>periodo: {{ product.garantia.periodo }}</p>
+    <p>tipo: {{product.garantia.tipo}}</p>
+  </div>
+  <div *ngIf="product.stock < 0">
+    <p>El producto no está disponible</p>
+  </div>
+
+  <div *ngIf="product.stock > 0">
+    <button type="button" (click)="addToCart(product)">Buy</button>
+  </div>
 </div>
